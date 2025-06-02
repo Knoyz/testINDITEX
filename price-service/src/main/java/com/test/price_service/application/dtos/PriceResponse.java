@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public record PriceResponse(
         Long productId,
         Long brandId,
-        Long priceList,
+        Integer priceList,
         String startDate,
         String endDate,
         String finalPrice
