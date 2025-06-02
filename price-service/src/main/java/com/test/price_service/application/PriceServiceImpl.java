@@ -1,4 +1,4 @@
-package com.test.price_service.domain.usecases;
+package com.test.price_service.application;
 
 import com.test.price_service.domain.ports.in.PriceServicePort;
 import com.test.price_service.domain.ports.out.PriceEventProducerPort;
