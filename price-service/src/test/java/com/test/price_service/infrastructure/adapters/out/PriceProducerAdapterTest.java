@@ -18,6 +18,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
 public class PriceProducerAdapterTest {
+
     @Test
     @DisplayName("Test sending PriceUpdateEvent to Kafka")
     public void testSendPriceUpdateEvent() {
