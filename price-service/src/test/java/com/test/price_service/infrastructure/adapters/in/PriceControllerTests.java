@@ -1,4 +1,4 @@
-package com.test.price_service;
+package com.test.price_service.infrastructure.adapters.in;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.price_service.application.dtos.PriceRequest;
@@ -26,7 +26,7 @@ class PriceControllerTests {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("Test 1: Test price on 2020-06-14 10:00 for product 35455, brand 1")
+    @DisplayName("Test 1: Check price on 2020-06-14 10:00 for product 35455, brand 1")
     void testGetPriceOnJune14At10() throws Exception {
         String applicationDate = "2020-06-14-10.00.00";
         PriceRequest request = new PriceRequest(35455L, 1L, applicationDate);
@@ -45,7 +45,7 @@ class PriceControllerTests {
     }
 
     @Test
-    @DisplayName("Test 2: Query price on 2020-06-14 16:00 for product 35455, brand 1")
+    @DisplayName("Test 2: Check price on 2020-06-14 16:00 for product 35455, brand 1")
     void testGetPriceOnJune14At16() throws Exception {
         String applicationDate = "2020-06-14-16.00.00";
         PriceRequest request = new PriceRequest(35455L, 1L, applicationDate);
@@ -64,7 +64,7 @@ class PriceControllerTests {
     }
 
     @Test
-    @DisplayName("Test 3: Query price on 2020-06-14 21:00 for product 35455, brand 1")
+    @DisplayName("Test 3: Check price on 2020-06-14 21:00 for product 35455, brand 1")
     void testGetPriceOnJune14At21() throws Exception {
         String applicationDate = "2020-06-14-21.00.00";
         PriceRequest request = new PriceRequest(35455L, 1L, applicationDate);
@@ -83,7 +83,7 @@ class PriceControllerTests {
     }
 
     @Test
-    @DisplayName("Test 4: Query price on 2020-06-15 10:00 for product 35455, brand 1")
+    @DisplayName("Test 4: Check price on 2020-06-15 10:00 for product 35455, brand 1")
     void testGetPriceOnJune15At10() throws Exception {
         String applicationDate = "2020-06-15-10.00.00";
         PriceRequest request = new PriceRequest(35455L, 1L, applicationDate);
@@ -102,7 +102,7 @@ class PriceControllerTests {
     }
 
     @Test
-    @DisplayName("Test 5: Query price on 2020-06-16 21:00 for product 35455, brand 1")
+    @DisplayName("Test 5: Check price on 2020-06-16 21:00 for product 35455, brand 1")
     void testGetPriceOnJune16At21() throws Exception {
         String applicationDate = "2020-06-16-21.00.00";
         PriceRequest request = new PriceRequest(35455L, 1L, applicationDate);
