@@ -1,20 +1,22 @@
 package com.test.price_service.domain.model;
 
-import lombok.Getter;
+import lombok.NonNull;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record Price(
-        UUID priceId,
-        Long brandId,
-        DateRange dateRange,
-        Integer priceList,
-        Long productId,
-        Integer priority,
-        Money price
+        @NonNull UUID priceId,
+        @NonNull Long brandId,
+        @NonNull DateRange dateRange,
+        @NonNull Integer priceList,
+        @NonNull Long productId,
+        @NonNull  Integer priority,
+        @NonNull Money price
 ) {
     public boolean isApplicable(LocalDateTime applicationDate) {
         return dateRange.contains(applicationDate);
     }
+
+
 }
