@@ -6,11 +6,13 @@ import com.test.price_service.domain.model.Price;
 import com.test.price_service.domain.ports.out.PriceRepositoryPort;
 import com.test.price_service.infrastructure.repository.PriceH2Repository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Component
 public class PriceRepositoryAdapter implements PriceRepositoryPort {
 
     private final PriceH2Repository priceH2Repository;
