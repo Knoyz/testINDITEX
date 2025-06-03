@@ -1,4 +1,4 @@
-package com.test.price_service;
+package com.test.price_service.infrastructure.adapters.in;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.price_service.application.dtos.PriceRequest;
