@@ -5,6 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PriceValidationException extends RuntimeException {
 
+    public PriceValidationException() {
+        super("Price validation failed");
+    }
+
     public PriceValidationException(String message) {
         super(message);
     }
