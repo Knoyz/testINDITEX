@@ -34,7 +34,8 @@ public class PriceController {
                 price.priceList(),
                 price.dateRange().startDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
                 price.dateRange().endDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                price.price().amount().toString() + " " + price.price().currency());
+                price.price().amount(),
+                price.price().currency());
 
         return ResponseEntity.ok(priceResponse);
     }

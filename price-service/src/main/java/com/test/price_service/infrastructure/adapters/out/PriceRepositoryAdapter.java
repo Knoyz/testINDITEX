@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
                         && priceEntity.getBrandId().equals(brandId)
                         && priceEntity.getStartDate().isBefore(date)
                         && priceEntity.getEndDate().isAfter(date))
-                .findFirst()
+                .max(Comparator.comparingInt(priceEntity -> priceEntity.getPriority()))
                 .map(priceEntity -> new Price(
                         priceEntity.getPriceId(),
                         priceEntity.getBrandId(),

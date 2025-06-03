@@ -8,6 +8,7 @@ public record PriceResponse(
         Integer priceList,
         String startDate,
         String endDate,
-        String finalPrice
+        BigDecimal price,
+        String currency
 ) {
 }

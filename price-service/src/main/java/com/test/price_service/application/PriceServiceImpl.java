@@ -23,6 +23,11 @@ public class PriceServiceImpl implements PriceServicePort {
 
     @Override
     public Price getApplicablePrice(Long productId, Long brandId, String date) {
+
+        var x = productId;
+        var y = brandId;
+        var z = date;
+
         var localDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss"));
 
         var price = priceRepositoryAdapter.findApplicablePrice(
