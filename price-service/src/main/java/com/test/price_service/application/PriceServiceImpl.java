@@ -1,11 +1,10 @@
 package com.test.price_service.application;
 
-import com.test.price_service.application.dtos.PriceResponse;
 import com.test.price_service.domain.events.PriceUpdateEvent;
+import com.test.price_service.domain.model.DateRange;
+import com.test.price_service.domain.model.Money;
 import com.test.price_service.domain.model.Price;
 import com.test.price_service.domain.ports.in.PriceServicePort;
-import com.test.price_service.domain.ports.out.PriceEventProducerPort;
-import com.test.price_service.domain.ports.out.PriceRepositoryPort;
 import com.test.price_service.infrastructure.adapters.in.rest.exception.PriceValidationException;
 import com.test.price_service.infrastructure.adapters.out.PriceProducerAdapter;
 import com.test.price_service.infrastructure.adapters.out.PriceRepositoryAdapter;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,12 +31,29 @@ public class PriceServiceImpl implements PriceServicePort {
         var y = brandId;
         var z = date;
 
-        var localDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss"));
+        var dateFormatted = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd-HH.mm.ss"));
 
         var price = priceRepositoryAdapter.findApplicablePrice(
                 productId,
                 brandId,
-                localDateTime).orElseThrow(
+                dateFormatted
+                )
+                .stream()
+                .filter(priceEntity -> priceEntity.dateRange() != null
+                        && priceEntity.dateRange().startDate() != null
+                        && priceEntity.dateRange().startDate().isBefore(dateFormatted)
+                        && priceEntity.dateRange().endDate().isAfter(dateFormatted))
+                .max(Comparator.comparingInt(priceEntity -> priceEntity.priority()))
+                .map(priceEntity -> new Price(
+                        priceEntity.priceId(),
+                        priceEntity.brandId(),
+                        new DateRange(priceEntity.dateRange().startDate(), priceEntity.dateRange().endDate()),
+                        priceEntity.priceList(),
+                        priceEntity.productId(),
+                        priceEntity.priority(),
+                        new Money(priceEntity.price().amount(), priceEntity.price().currency())
+                ))
+                .orElseThrow(
                         () -> new PriceValidationException(
                                 "No applicable price found for productId: " + productId
                                         + ", brandId: " + brandId
@@ -44,6 +61,7 @@ public class PriceServiceImpl implements PriceServicePort {
 
         log.info( "Found applicable price: {} for productId: {}, brandId: {}, date: {}",
                 price, productId, brandId, date);
+
 
         priceProducerAdapter.sendPriceUpdateEvent(
                 new PriceUpdateEvent(
