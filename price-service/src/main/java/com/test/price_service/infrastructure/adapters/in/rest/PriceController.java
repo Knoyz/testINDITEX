@@ -1,4 +1,4 @@
-package com.test.price_service.infrastructure.adapters.in;
+package com.test.price_service.infrastructure.adapters.in.rest;
 
 import com.test.price_service.application.PriceServiceImpl;
 import com.test.price_service.application.dtos.PriceRequest;

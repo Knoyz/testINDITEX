@@ -6,14 +6,17 @@ import com.test.price_service.domain.model.Price;
 import com.test.price_service.domain.ports.in.PriceServicePort;
 import com.test.price_service.domain.ports.out.PriceEventProducerPort;
 import com.test.price_service.domain.ports.out.PriceRepositoryPort;
+import com.test.price_service.infrastructure.adapters.in.rest.exception.PriceValidationException;
 import com.test.price_service.infrastructure.adapters.out.PriceProducerAdapter;
 import com.test.price_service.infrastructure.adapters.out.PriceRepositoryAdapter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class PriceServiceImpl implements PriceServicePort {
@@ -34,10 +37,13 @@ public class PriceServiceImpl implements PriceServicePort {
                 productId,
                 brandId,
                 localDateTime).orElseThrow(
-                        () -> new IllegalArgumentException(
+                        () -> new PriceValidationException(
                                 "No applicable price found for productId: " + productId
                                         + ", brandId: " + brandId
                                         + ", date: " + date));
+
+        log.info( "Found applicable price: {} for productId: {}, brandId: {}, date: {}",
+                price, productId, brandId, date);
 
         priceProducerAdapter.sendPriceUpdateEvent(
                 new PriceUpdateEvent(
